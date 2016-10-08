@@ -15,6 +15,7 @@
 		28C0B9ED1DA5E16F0070DBA0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 28C0B9EB1DA5E16F0070DBA0 /* LaunchScreen.storyboard */; };
 		28C0B9F81DA5E1700070DBA0 /* HoopsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28C0B9F71DA5E1700070DBA0 /* HoopsTests.swift */; };
 		28C0BA031DA5E1700070DBA0 /* HoopsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28C0BA021DA5E1700070DBA0 /* HoopsUITests.swift */; };
+		C1DF4B541DA8327400388BEC /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DF4B531DA8327400388BEC /* Player.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		28C0B9FE1DA5E1700070DBA0 /* HoopsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HoopsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		28C0BA021DA5E1700070DBA0 /* HoopsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoopsUITests.swift; sourceTree = "<group>"; };
 		28C0BA041DA5E1700070DBA0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C1DF4B531DA8327400388BEC /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,13 +101,11 @@
 		28C0B9DF1DA5E16F0070DBA0 /* Hoops */ = {
 			isa = PBXGroup;
 			children = (
-				28C0B9E01DA5E16F0070DBA0 /* AppDelegate.swift */,
+				C1DF4B551DA8331700388BEC /* Supporting Files */,
 				28C0B9E21DA5E16F0070DBA0 /* FirstViewController.swift */,
 				28C0B9E41DA5E16F0070DBA0 /* SecondViewController.swift */,
+				C1DF4B531DA8327400388BEC /* Player.swift */,
 				28C0B9E61DA5E16F0070DBA0 /* Main.storyboard */,
-				28C0B9E91DA5E16F0070DBA0 /* Assets.xcassets */,
-				28C0B9EB1DA5E16F0070DBA0 /* LaunchScreen.storyboard */,
-				28C0B9EE1DA5E16F0070DBA0 /* Info.plist */,
 			);
 			path = Hoops;
 			sourceTree = "<group>";
@@ -126,6 +126,17 @@
 				28C0BA041DA5E1700070DBA0 /* Info.plist */,
 			);
 			path = HoopsUITests;
+			sourceTree = "<group>";
+		};
+		C1DF4B551DA8331700388BEC /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				28C0B9E01DA5E16F0070DBA0 /* AppDelegate.swift */,
+				28C0B9E91DA5E16F0070DBA0 /* Assets.xcassets */,
+				28C0B9EB1DA5E16F0070DBA0 /* LaunchScreen.storyboard */,
+				28C0B9EE1DA5E16F0070DBA0 /* Info.plist */,
+			);
+			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -196,13 +207,16 @@
 				TargetAttributes = {
 					28C0B9DC1DA5E16F0070DBA0 = {
 						CreatedOnToolsVersion = 7.3.1;
+						LastSwiftMigration = 0800;
 					};
 					28C0B9F21DA5E1700070DBA0 = {
 						CreatedOnToolsVersion = 7.3.1;
+						LastSwiftMigration = 0800;
 						TestTargetID = 28C0B9DC1DA5E16F0070DBA0;
 					};
 					28C0B9FD1DA5E1700070DBA0 = {
 						CreatedOnToolsVersion = 7.3.1;
+						LastSwiftMigration = 0800;
 						TestTargetID = 28C0B9DC1DA5E16F0070DBA0;
 					};
 				};
@@ -259,6 +273,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C1DF4B541DA8327400388BEC /* Player.swift in Sources */,
 				28C0B9E51DA5E16F0070DBA0 /* SecondViewController.swift in Sources */,
 				28C0B9E11DA5E16F0070DBA0 /* AppDelegate.swift in Sources */,
 				28C0B9E31DA5E16F0070DBA0 /* FirstViewController.swift in Sources */,
@@ -409,6 +424,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.YanboFang.Hoops;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -420,6 +436,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.YanboFang.Hoops;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -431,6 +448,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.YanboFang.HoopsTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Hoops.app/Hoops";
 			};
 			name = Debug;
@@ -443,6 +461,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.YanboFang.HoopsTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Hoops.app/Hoops";
 			};
 			name = Release;
@@ -454,6 +473,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.YanboFang.HoopsUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = Hoops;
 			};
 			name = Debug;
@@ -465,6 +485,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.YanboFang.HoopsUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = Hoops;
 			};
 			name = Release;
@@ -488,6 +509,7 @@
 				28C0BA091DA5E1700070DBA0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		28C0BA0A1DA5E1700070DBA0 /* Build configuration list for PBXNativeTarget "HoopsTests" */ = {
 			isa = XCConfigurationList;
@@ -496,6 +518,7 @@
 				28C0BA0C1DA5E1700070DBA0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		28C0BA0D1DA5E1700070DBA0 /* Build configuration list for PBXNativeTarget "HoopsUITests" */ = {
 			isa = XCConfigurationList;
@@ -504,6 +527,7 @@
 				28C0BA0F1DA5E1700070DBA0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
