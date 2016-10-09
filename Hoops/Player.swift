@@ -9,13 +9,9 @@
 import Foundation
 
 class Player {
-    var username: String
-    var followers: Int
-    var following: Int
+    private var username: String
     
-    init(username: String, followers: Int, following: Int) {
+    init(username: String) {
         self.username = username
-        self.followers = followers
-        self.following = following
     }
 }

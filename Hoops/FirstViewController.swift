@@ -12,6 +12,25 @@ import CoreLocation
 
 class FirstViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     
+    var nearbyGames: [Games] = []
+    
+    @IBAction func gameClicked(_ sender: AnyObject) {
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let identifier = segue.identifier {
+            switch identifier {
+            case "getGames":
+                if let vc = segue.destination as? GamesTableViewController {
+                    // Need to pass which basketball court was clicked into the TableViewController
+                    
+                }
+            default: break
+            }
+        }
+    }
+    
+    
     @IBOutlet weak var mapView: MKMapView! {
         didSet {
             mapView.delegate = self
@@ -42,14 +61,6 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, MKMapVie
         locationManager.stopUpdatingLocation()
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        // Authorization
-        self.locationManager.requestWhenInUseAuthorization()
-        moveToCurrent()
-    }
-    
     // shift to user's current location
     func moveToCurrent() {
         if CLLocationManager.locationServicesEnabled() {
@@ -58,6 +69,37 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, MKMapVie
             locationManager.startUpdatingLocation()
         }
 
+    }
+    
+    // Load nearby location from Database here...
+    // Will have to implement later...
+    
+    
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        // For testing, set up nearby games
+        let one = Player(username: "michael")
+        let two = Player(username: "jeff")
+        let three = Player(username: "three")
+        let four = Player(username: "four")
+        nearbyGames.append(Games(
+            maxPlayers: 6,
+            currentNumPlayers: 2,
+            month: 10,
+            date: 20,
+            startTime: 5,
+            endTime: 6,
+            level: "Novice",
+            teamBlue: [one, three, four],
+            teamRed: [two]
+        ))
+        
+        // Authorization
+        self.locationManager.requestWhenInUseAuthorization()
+        moveToCurrent()
     }
 
     override func didReceiveMemoryWarning() {
