@@ -10,6 +10,8 @@ import UIKit
 
 class GamesTableViewController: UITableViewController {
     
+    var games = [Games]()
+    
     var court: Int = 0 {
         didSet{
             self.tableView.reloadData()
@@ -18,12 +20,50 @@ class GamesTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        //load sample data
+        loadSampleGames()
+    
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+    }
+    
+    func loadSampleGames() {
+        // For testing, load sample games
+        let one = Player(username: "michael")
+        let two = Player(username: "jeff")
+        let three = Player(username: "three")
+        let four = Player(username: "four")
+        let game1 = Games(
+            gameName: "Coolest Game of the Year",
+            maxPlayers: 6,
+            currentNumPlayers: 2,
+            month: 10,
+            date: 20,
+            startTime: 5,
+            endTime: 6,
+            level: "Novice",
+            teamBlue: [one, three, four],
+            teamRed: [two]
+        )
+        
+        let game2 = Games(
+            gameName: "Lamest Game of the Year",
+            maxPlayers: 8,
+            currentNumPlayers: 5,
+            month: 11,
+            date: 21,
+            startTime: 5,
+            endTime: 6,
+            level: "Novice",
+            teamBlue: [one, three, four],
+            teamRed: [two]
+            )
+        
+        games += [game1, game2]
     }
 
     override func didReceiveMemoryWarning() {
@@ -34,20 +74,34 @@ class GamesTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
+        // return the number of sections
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+        // return the number of rows
+        return games.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
         
+        // Table view cells are reused and should be dequeued using a cell identifier.
+        let cellIdentifier = "GamesTableViewCell"
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! GamesTableViewCell
+        
+        // Fetches the appropriate game for the data source layout.
+        let game = games[indexPath.row]
+
+        // Configure the cell
+        cell.gameName.text = game.gameName
+        cell.level.text = game.level
+        cell.month.text = String(game.month)
+        cell.date.text = String(game.date)
+        cell.players.text = String(game.currentNumPlayers)
+        cell.maxPlayers.text = String(game.maxPlayers)
+        cell.startTime.text = String(game.startTime)
+        cell.endTime.text = String(game.endTime)
         
 
         return cell

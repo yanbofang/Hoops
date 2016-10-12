@@ -9,17 +9,19 @@
 import Foundation
 
 class Games {
-    private var maxPlayers: Int
-    private var currentNumPlayers: Int
-    private var month: Int
-    private var date: Int
-    private var startTime: Int
-    private var endTime: Int
-    private var level: String
-    private var teamBlue: [Player]
-    private var teamRed: [Player]
+    var gameName: String
+    var maxPlayers: Int
+    var currentNumPlayers: Int
+    var month: Int
+    var date: Int
+    var startTime: Int
+    var endTime: Int
+    var level: String
+    var teamBlue: [Player]
+    var teamRed: [Player]
     
-    init(maxPlayers: Int, currentNumPlayers: Int, month: Int, date: Int, startTime: Int, endTime: Int, level: String, teamBlue: [Player], teamRed: [Player] ) {
+    init(gameName: String, maxPlayers: Int, currentNumPlayers: Int, month: Int, date: Int, startTime: Int, endTime: Int, level: String, teamBlue: [Player], teamRed: [Player] ) {
+        self.gameName = gameName
         self.maxPlayers = maxPlayers
         self.currentNumPlayers = currentNumPlayers
         self.month = month

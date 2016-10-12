@@ -86,6 +86,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, MKMapVie
         let three = Player(username: "three")
         let four = Player(username: "four")
         nearbyGames.append(Games(
+            gameName: "Coolest Game of the Year",
             maxPlayers: 6,
             currentNumPlayers: 2,
             month: 10,

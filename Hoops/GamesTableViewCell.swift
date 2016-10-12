@@ -9,15 +9,16 @@
 import UIKit
 
 class GamesTableViewCell: UITableViewCell {
-
-    @IBOutlet weak var coverImage: UIImageView!
     
     @IBOutlet weak var players: UILabel!
+    @IBOutlet weak var maxPlayers: UILabel!
     @IBOutlet weak var level: UILabel!
+    @IBOutlet weak var month: UILabel!
     @IBOutlet weak var date: UILabel!
-    @IBOutlet weak var time: UILabel!
+    @IBOutlet weak var gameName: UILabel!
+    @IBOutlet weak var startTime: UILabel!
+    @IBOutlet weak var endTime: UILabel!
     
-    @IBOutlet weak var gameInfo: UILabel!
     
     
     override func awakeFromNib() {
