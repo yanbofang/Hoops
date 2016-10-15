@@ -10,19 +10,85 @@ import UIKit
 
 class GamesTableViewController: UITableViewController {
     
+    @IBOutlet weak var GamesTable: UITableView! {
+        didSet {
+            self.GamesTable.reloadData()
+        }
+    }
+    
     var games = [Games]()
     
     var court: Int = 0 {
         didSet{
-            self.tableView.reloadData()
+            DispatchQueue.global(qos: .userInitiated).async {
+                self.downloadData()
+                // Bounce back to the main thread to update the UI
+                DispatchQueue.main.async {
+                    
+                }
+            }
         }
     }
-
+    
+    var data : NSMutableData = NSMutableData()
+    var index  = 0
+    
+    func downloadData() {
+        let url = NSURL(string: "http://minh.heliohost.org/hoops/database_op.php?function=getGames&court=" + String(court))
+        let request = URLRequest(url: url as! URL)
+        
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let data = data else {
+                print("request failed \(error)")
+                return
+            }
+            
+            do {
+                if let json = try JSONSerialization.jsonObject(with: data) as?
+                    [AnyObject] {
+                    //for index in 0...json.count-1 {
+                    if let item = json[self.index] as? [String: AnyObject] {
+                        self.index += 1
+                        if let game_id = item["game_id"] as? String {
+                            self.games.append(Games(
+                                gameName: item["description"] as! String,
+                                maxPlayers: Int(item["max_player_count"] as! String)!,
+                                currentNumPlayers: Int(item["current_player_count"] as! String)!,
+                                month: 10,
+                                date: 20,
+                                startTime: 5,
+                                endTime: 6,
+                                level: "Novice",
+                                teamBlue: [],
+                                teamRed: []
+                            ))
+                            print(item["description"] as! String)
+                        }
+                    }
+                    self.GamesTable.reloadData()
+                    //}
+                }
+            } catch let parseError {
+                print("parsing error: \(parseError)")
+                let responseString = String(data: data, encoding: .utf8)
+                print("raw response: \(responseString)")
+            }
+        }
+        task.resume()
+    }
+    
+   
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //load sample data
-        loadSampleGames()
+        // Get game data
+        DispatchQueue.global(qos: .userInitiated).async {
+            self.downloadData()
+            // Bounce back to the main thread to update the UI
+            DispatchQueue.main.async {
+                self.GamesTable.reloadData()
+            }
+        }
     
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -31,41 +97,6 @@ class GamesTableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
     
-    func loadSampleGames() {
-        // For testing, load sample games
-        let one = Player(username: "michael")
-        let two = Player(username: "jeff")
-        let three = Player(username: "three")
-        let four = Player(username: "four")
-        let game1 = Games(
-            gameName: "Coolest Game of the Year",
-            maxPlayers: 6,
-            currentNumPlayers: 2,
-            month: 10,
-            date: 20,
-            startTime: 5,
-            endTime: 6,
-            level: "Novice",
-            teamBlue: [one, three, four],
-            teamRed: [two]
-        )
-        
-        let game2 = Games(
-            gameName: "Lamest Game of the Year",
-            maxPlayers: 8,
-            currentNumPlayers: 5,
-            month: 11,
-            date: 21,
-            startTime: 5,
-            endTime: 6,
-            level: "Novice",
-            teamBlue: [one, three, four],
-            teamRed: [two]
-            )
-        
-        games += [game1, game2]
-    }
-
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
