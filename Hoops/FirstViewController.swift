@@ -24,6 +24,10 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, MKMapVie
             case "getGames":
                 if let vc = segue.destination as? GamesTableViewController {
                     // Need to pass which basketball court was clicked into the TableViewController
+<<<<<<< HEAD
+=======
+                    vc.court = 1
+>>>>>>> origin/master
                 }
             default: break
             }
