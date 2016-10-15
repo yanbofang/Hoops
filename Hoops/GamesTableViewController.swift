@@ -17,14 +17,17 @@ class GamesTableViewController: UITableViewController {
     }
     
     var games = [Games]()
+    var getData = true
     
     var court: Int = 0 {
         didSet{
             DispatchQueue.global(qos: .userInitiated).async {
-                self.downloadData()
+                if self.getData {
+                    self.downloadData()
+                }
                 // Bounce back to the main thread to update the UI
                 DispatchQueue.main.async {
-                    
+                    self.getData = false
                 }
             }
         }
@@ -46,9 +49,8 @@ class GamesTableViewController: UITableViewController {
             do {
                 if let json = try JSONSerialization.jsonObject(with: data) as?
                     [AnyObject] {
-                    //for index in 0...json.count-1 {
-                    if let item = json[self.index] as? [String: AnyObject] {
-                        self.index += 1
+                    for index in 0...json.count-1 {
+                    if let item = json[index] as? [String: AnyObject] {
                         if let game_id = item["game_id"] as? String {
                             self.games.append(Games(
                                 gameName: item["description"] as! String,
@@ -66,7 +68,7 @@ class GamesTableViewController: UITableViewController {
                         }
                     }
                     self.GamesTable.reloadData()
-                    //}
+                    }
                 }
             } catch let parseError {
                 print("parsing error: \(parseError)")
@@ -76,6 +78,7 @@ class GamesTableViewController: UITableViewController {
         }
         task.resume()
     }
+
     
    
     override func viewDidLoad() {
@@ -83,10 +86,13 @@ class GamesTableViewController: UITableViewController {
         
         // Get game data
         DispatchQueue.global(qos: .userInitiated).async {
-            self.downloadData()
+            if self.getData {
+                self.downloadData()
+            }
             // Bounce back to the main thread to update the UI
             DispatchQueue.main.async {
                 self.GamesTable.reloadData()
+                self.getData = false
             }
         }
     
