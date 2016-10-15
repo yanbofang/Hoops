@@ -28,13 +28,6 @@ if (!$success) {
 
 $conn->close();
 
-function getComments() {
-	global $conn;
-	global $success;
-
-	
-}
-
 /*
 	Add game to database (Games Table)
 
