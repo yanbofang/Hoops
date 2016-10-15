@@ -101,6 +101,7 @@ function addGame() {
 		$stmt->execute();
 		$game_id = $stmt->insert_id;
 		$stmt->close();
+		}
 	}
 }
 
