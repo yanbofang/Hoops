@@ -50,6 +50,7 @@ class GamesTableViewController: UITableViewController {
                 if let json = try JSONSerialization.jsonObject(with: data) as?
                     [AnyObject] {
                     for index in 0...json.count-1 {
+<<<<<<< HEAD
                         if let item = json[index] as? [String: AnyObject] {
                             if let game_id = item["game_id"] as? String {
                                 self.games.append(Games(
@@ -66,9 +67,31 @@ class GamesTableViewController: UITableViewController {
                                 ))
                                 print(item["description"] as! String)
                             }
+=======
+                    if let item = json[index] as? [String: AnyObject] {
+                        if let game_id = item["game_id"] as? String {
+                            self.games.append(Games(
+                                gameName: item["description"] as! String,
+                                maxPlayers: Int(item["max_player_count"] as! String)!,
+                                currentNumPlayers: Int(item["current_player_count"] as! String)!,
+                                month: 10,
+                                date: 20,
+                                startTime: 5,
+                                endTime: 6,
+                                level: "Novice",
+                                teamBlue: [],
+                                teamRed: []
+                            ))
+                            print(item["description"] as! String)
+>>>>>>> origin/master
                         }
                         self.GamesTable.reloadData()
                     }
+<<<<<<< HEAD
+=======
+                    self.GamesTable.reloadData()
+                    }
+>>>>>>> origin/master
                 }
             } catch let parseError {
                 print("parsing error: \(parseError)")
@@ -78,6 +101,7 @@ class GamesTableViewController: UITableViewController {
         }
         task.resume()
     }
+
     
     
     

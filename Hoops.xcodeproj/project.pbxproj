@@ -19,6 +19,7 @@
 		C19329671DAB29AF00E2438E /* GamesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19329661DAB29AF00E2438E /* GamesTableViewCell.swift */; };
 		C1C39D3F1DAA44DA00755981 /* Games.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1C39D3E1DAA44DA00755981 /* Games.swift */; };
 		C1C39D411DAADC6900755981 /* GamesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1C39D401DAADC6900755981 /* GamesTableViewController.swift */; };
+		C1CE061B1DB1CA31000C82DE /* JoinGameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1CE061A1DB1CA31000C82DE /* JoinGameViewController.swift */; };
 		C1DF4B541DA8327400388BEC /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DF4B531DA8327400388BEC /* Player.swift */; };
 /* End PBXBuildFile section */
 
@@ -58,6 +59,7 @@
 		C19329661DAB29AF00E2438E /* GamesTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GamesTableViewCell.swift; sourceTree = "<group>"; };
 		C1C39D3E1DAA44DA00755981 /* Games.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Games.swift; sourceTree = "<group>"; };
 		C1C39D401DAADC6900755981 /* GamesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GamesTableViewController.swift; sourceTree = "<group>"; };
+		C1CE061A1DB1CA31000C82DE /* JoinGameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JoinGameViewController.swift; sourceTree = "<group>"; };
 		C1DF4B531DA8327400388BEC /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -113,7 +115,11 @@
 				28C0B9E21DA5E16F0070DBA0 /* FirstViewController.swift */,
 				C1C39D401DAADC6900755981 /* GamesTableViewController.swift */,
 				C19329661DAB29AF00E2438E /* GamesTableViewCell.swift */,
+<<<<<<< HEAD
 				284AF47D1DB1C8330024DD56 /* CreatGameViewController.swift */,
+=======
+				C1CE061A1DB1CA31000C82DE /* JoinGameViewController.swift */,
+>>>>>>> origin/master
 				28C0B9E41DA5E16F0070DBA0 /* SecondViewController.swift */,
 				C1C39D3E1DAA44DA00755981 /* Games.swift */,
 				C1DF4B531DA8327400388BEC /* Player.swift */,
@@ -285,7 +291,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+<<<<<<< HEAD
 				284AF47E1DB1C8330024DD56 /* CreatGameViewController.swift in Sources */,
+=======
+				C1CE061B1DB1CA31000C82DE /* JoinGameViewController.swift in Sources */,
+>>>>>>> origin/master
 				C1DF4B541DA8327400388BEC /* Player.swift in Sources */,
 				C1C39D411DAADC6900755981 /* GamesTableViewController.swift in Sources */,
 				28C0B9E51DA5E16F0070DBA0 /* SecondViewController.swift in Sources */,
