@@ -10,11 +10,15 @@ else
 
 switch ($function) {
 	case 'getGames':
-		getGames();
-		break;
+	getGames();
+	break;
+
+	case 'addGame':
+	addGame();
+	break;
 	
 	default:
-		$success = false;
+	$success = false;
 	break;
 }
 
@@ -24,6 +28,95 @@ if (!$success) {
 
 $conn->close();
 
+/*
+	Add game to database (Games Table)
+
+	-REQUIRED PARAMETERS:
+	---------------------
+	function=addGame
+	court_id, date, time, description, current_player_count, max_player_count, user_id
+
+	-RETURNS
+	--------
+	N/A
+*/
+
+function addGame() {
+	global $conn;
+	global $success;
+
+	if (isset($_GET['court_id']))
+		$court_id = $_GET['court_id'];
+	else
+		$success = false;
+	if (!is_numeric($court_id) || $court_id < 0 || $court_id != round($court_id, 0)) {
+		$success = false;
+	}
+
+	if (isset($_GET['date']))
+		$date = $_GET['date'];
+	else
+		$success = false;
+
+	if (isset($_GET['time']))
+		$time = $_GET['time'];
+	else
+		$success = false;
+
+	if (isset($_GET['description']))
+		$description = $_GET['description'];
+	else
+		$success = false;	
+
+	if (isset($_GET['current_player_count']))
+		$current_player_count = $_GET['current_player_count'];
+	else
+		$success = false;
+	if (!is_numeric($current_player_count) || $current_player_count < 0 || $current_player_count != round($current_player_count, 0)) {
+		$success = false;
+	}
+
+	if (isset($_GET['max_player_count']))
+		$max_player_count = $_GET['max_player_count'];
+	else
+		$success = false;
+	if (!is_numeric($max_player_count) || $max_player_count < 0 || $max_player_count != round($max_player_count, 0)) {
+		$success = false;
+	}
+
+	if (isset($_GET['user_id']))
+		$user_id = $_GET['user_id'];
+	else
+		$success = false;
+	if (!is_numeric($user_id) || $user_id < 0 || $user_id != round($user_id, 0)) {
+		$success = false;
+	}
+
+	if ($success) {
+		if ($stmt = $conn->prepare("INSERT INTO 
+			Games (court_id, date, time, description, current_player_count, max_player_count, user_id)
+			VALUES
+			('$court_id', ?, ?, ?, '$current_player_count', '$max_player_count', '$user_id')")) {
+			$stmt->bind_param('sss', $date, $time, $description);
+		$stmt->execute();
+		$game_id = $stmt->insert_id;
+		$stmt->close();
+	}
+}
+
+/*
+	Retrieve games from database (Games Table)
+
+	-REQUIRED PARAMETERS:
+	---------------------
+	function=getGames
+	court_id
+
+	-RETURNS
+	--------
+	json array:
+	{game_id, date, time, description, current_player_count, max_player_count, user_id}
+*/
 
 function getGames() {
 	global $conn;
