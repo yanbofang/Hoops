@@ -7,7 +7,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--First-->
+        <!--Map-->
         <scene sceneID="hNz-n2-bh7">
             <objects>
                 <viewController id="9pv-A4-QxB" customClass="FirstViewController" customModule="Hoops" customModuleProvider="target" sceneMemberID="viewController">
@@ -38,7 +38,7 @@
                                 <state key="normal" title="Sample Game"/>
                                 <connections>
                                     <action selector="gameClicked:" destination="9pv-A4-QxB" eventType="touchUpInside" id="jQu-QZ-9tc"/>
-                                    <segue destination="8Ke-Tg-a7M" kind="show" identifier="getGames" id="nMx-cn-GW3"/>
+                                    <segue destination="8Ke-Tg-a7M" kind="show" identifier="getGames" id="kQi-c2-jii"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -55,7 +55,7 @@
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="First" image="first" id="acW-dT-cKf"/>
-                    <navigationItem key="navigationItem" id="qLY-6E-AzJ"/>
+                    <navigationItem key="navigationItem" title="Map" id="qLY-6E-AzJ"/>
                     <connections>
                         <outlet property="mapView" destination="KeZ-Yg-cE0" id="Rth-R3-bGa"/>
                     </connections>
@@ -64,7 +64,7 @@
             </objects>
             <point key="canvasLocation" x="1703" y="-322"/>
         </scene>
-        <!--Games Table View Controller-->
+        <!--Games-->
         <scene sceneID="DUj-P6-Grm">
             <objects>
                 <tableViewController id="8Ke-Tg-a7M" customClass="GamesTableViewController" customModule="Hoops" customModuleProvider="target" sceneMemberID="viewController">
@@ -77,7 +77,7 @@
                                 <rect key="frame" x="0.0" y="92" width="375" height="137"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="S48-iV-u8m" id="Lbu-Di-zXM">
-                                    <frame key="frameInset" width="375" height="137"/>
+                                    <frame key="frameInset" width="375" height="136.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NOVICE" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bDj-RL-HSL">
@@ -139,6 +139,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
+                                    <color key="tintColor" red="0.020714651711625898" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
                                         <constraint firstItem="b4g-7D-LVt" firstAttribute="leading" secondItem="Lbu-Di-zXM" secondAttribute="leadingMargin" constant="84" id="11p-DR-sZz"/>
                                         <constraint firstItem="Oit-0c-Ckp" firstAttribute="leading" secondItem="AVj-3r-lP3" secondAttribute="trailing" constant="8" symbolic="YES" id="24D-PJ-7bg"/>
@@ -186,10 +187,38 @@
                             <outlet property="delegate" destination="8Ke-Tg-a7M" id="rBb-Yw-2NF"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" title="Games" id="2EC-U5-s3p">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="VBH-it-LD7">
+                            <connections>
+                                <segue destination="XK6-F2-JxZ" kind="show" id="qF5-Ke-cgr"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="709-Za-oAh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2544.8000000000002" y="-322.48875562218893"/>
+            <point key="canvasLocation" x="2684" y="-322"/>
+        </scene>
+        <!--Create a Game-->
+        <scene sceneID="ZRD-dD-5XL">
+            <objects>
+                <viewController id="XK6-F2-JxZ" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="fJh-me-s46"/>
+                        <viewControllerLayoutGuide type="bottom" id="5Ys-cJ-tWa"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="SlG-2M-gVd">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Create a Game" id="xcf-Jd-eVO">
+                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="done" id="vk7-NR-MYi"/>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hi6-Pr-C2N" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3598" y="-322"/>
         </scene>
         <!--First-->
         <scene sceneID="9YJ-ay-ZR4">

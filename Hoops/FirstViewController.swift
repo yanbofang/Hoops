@@ -17,13 +17,13 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, MKMapVie
     @IBAction func gameClicked(_ sender: AnyObject) {
     }
     
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let identifier = segue.identifier {
             switch identifier {
             case "getGames":
                 if let vc = segue.destination as? GamesTableViewController {
                     // Need to pass which basketball court was clicked into the TableViewController
-                    
                 }
             default: break
             }
