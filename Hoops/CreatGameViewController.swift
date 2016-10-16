@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CreatGameViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource{
+class CreatGameViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate, UITextViewDelegate{
 
     @IBOutlet weak var gameName: UITextField!
     @IBOutlet weak var date: UIDatePicker!
@@ -16,7 +16,6 @@ class CreatGameViewController: UIViewController, UIPickerViewDelegate, UIPickerV
     @IBOutlet weak var level: UIPickerView!
     @IBOutlet weak var maxPlayers: UITextField!
     @IBOutlet weak var gameDescription: UITextView!
-    
     
     var court: Int = 1
     
@@ -45,6 +44,22 @@ class CreatGameViewController: UIViewController, UIPickerViewDelegate, UIPickerV
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        //Create a placeholder for gameName
+        gameName.delegate = self
+        gameName.text = "Please enter the game name here..."
+        gameName.textColor = UIColor.lightGray
+        
+        //Create a placeholder for maxPlayers
+        maxPlayers.delegate = self
+        maxPlayers.text = "Please enter a number from 2 - 12..."
+        maxPlayers.textColor = UIColor.lightGray
+        
+        //Create a placeholder for gameDescription
+        gameDescription.delegate = self
+        gameDescription.text = "Please briefly describe the game..."
+        gameDescription.textColor = UIColor.lightGray
+        
+        
         //connect data
         self.level.delegate = self
         self.level.dataSource = self
@@ -53,6 +68,39 @@ class CreatGameViewController: UIViewController, UIPickerViewDelegate, UIPickerV
         levelData = ["Novice", "Amatuer", "Pro", "All Star"]
         
         // Do any additional setup after loading the view.
+    }
+
+    
+    public func textFieldDidBeginEditing(_ textField: UITextField){
+        if textField.textColor == UIColor.lightGray {
+            textField.text = nil
+            textField.textColor = UIColor.black
+        }
+    }
+    
+    public func textFieldDidEndEditing(_ textField: UITextField) {
+        if (gameName.text?.isEmpty)! {
+            textField.text = "Please enter the game name here..."
+            textField.textColor = UIColor.lightGray
+        }
+        if (maxPlayers.text?.isEmpty)! {
+            textField.text = "Please enter a number from 2 - 12..."
+            textField.textColor = UIColor.lightGray
+        }
+    }
+    
+    public func textViewDidBeginEditing(_ textView: UITextView){
+        if textView.textColor == UIColor.lightGray {
+            textView.text = nil
+            textView.textColor = UIColor.black
+        }
+    }
+    
+    public func textViewDidEndEditing(_ textView: UITextView) {
+        if (gameDescription.text?.isEmpty)! {
+            textView.text = "Please briefly describe the game..."
+            textView.textColor = UIColor.lightGray
+        }
     }
 
     /*
