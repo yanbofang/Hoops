@@ -16,6 +16,10 @@ switch ($function) {
 	case 'addGame':
 	addGame();
 	break;
+
+	case 'getCourtId':
+	getCourtId();
+	break;
 	
 	default:
 	$success = false;
@@ -23,10 +27,61 @@ switch ($function) {
 }
 
 if (!$success) {
-	echo "error";
+	echo "error in address";
 }
 
 $conn->close();
+
+/*
+	Retrieve games from database (Games Table)
+
+	-REQUIRED PARAMETERS:
+	---------------------
+	function=getGames
+	court_id
+
+	-RETURNS
+	--------
+	json array:
+	{game_id, date, time, description, current_player_count, max_player_count, user_id}
+*/
+
+function getGames() {
+	global $conn;
+	global $success;
+	if (isset($_GET['court']))
+		$court_id = $_GET['court'];
+	else
+		$success = false;
+
+	if (!is_numeric($court_id) || $court_id < 0 || $court_id != round($court_id, 0)) {
+		$success = false;
+	}
+
+	if ($success) {
+		$query = "SELECT * FROM Games WHERE court_id = '$court_id'";
+		$query .= " AND date >= CURDATE()";
+		$query .= " ORDER BY date ASC, time ASC";
+
+		$result = $conn->query($query);
+
+		$games = array();
+		while ($row = $result->fetch_assoc()) {
+
+			$array = array(
+				"game_id" => $row['game_id'],
+				"date" => $row['date'],
+				"time" => $row['time'],
+				"description" => $row['description'],
+				"current_player_count" => $row['current_player_count'],
+				"max_player_count" => $row['max_player_count'],
+				"user_id" => $row['user_id']
+				);
+			$games[] = $array;
+		}
+		echo json_encode($games);
+	}
+}
 
 /*
 	Add game to database (Games Table)
@@ -97,62 +152,61 @@ function addGame() {
 			Games (court_id, date, time, description, current_player_count, max_player_count, user_id)
 			VALUES
 			('$court_id', ?, ?, ?, '$current_player_count', '$max_player_count', '$user_id')")) {
+
 			$stmt->bind_param('sss', $date, $time, $description);
-		$stmt->execute();
-		$game_id = $stmt->insert_id;
-		$stmt->close();
+			$stmt->execute();
+			$game_id = $stmt->insert_id;
+			$stmt->close();
 		}
 	}
 }
 
 /*
-	Retrieve games from database (Games Table)
+	Retrieve court_id (if exists otherwise add to database)
 
 	-REQUIRED PARAMETERS:
 	---------------------
-	function=getGames
-	court_id
+	function=getCourtId
+	lat, lng
 
 	-RETURNS
 	--------
-	json array:
-	{game_id, date, time, description, current_player_count, max_player_count, user_id}
+	court_id
 */
 
-function getGames() {
+function getCourtId() {
 	global $conn;
 	global $success;
-	if (isset($_GET['court']))
-		$court_id = $_GET['court'];
+
+	if (isset($_GET['lat']))
+		$lat = $_GET['lat'];
 	else
 		$success = false;
 
-	if (!is_numeric($court_id) || $court_id < 0 || $court_id != round($court_id, 0)) {
+	if (isset($_GET['lng']))
+		$lng = $_GET['lng'];
+	else
 		$success = false;
-	}
+
+	if (!is_numeric($lat) || !is_numeric($lng))
+		$success = false;
 
 	if ($success) {
-		$query = "SELECT * FROM Games WHERE court_id = '$court_id'";
-		$query .= " AND date >= CURDATE()";
-		$query .= " ORDER BY date ASC, time ASC";
-
+		$query = "SELECT court_id FROM Court WHERE ABS(latitude - '$lat') < 0.00005 AND ABS(longitude - '$lng') < 0.00005";
 		$result = $conn->query($query);
 
-		$games = array();
-		while ($row = $result->fetch_assoc()) {
-
-			$array = array(
-				"game_id" => $row['game_id'],
-				"date" => $row['date'],
-				"time" => $row['time'],
-				"description" => $row['description'],
-				"current_player_count" => $row['current_player_count'],
-				"max_player_count" => $row['max_player_count'],
-				"user_id" => $row['user_id']
-				);
-			$games[] = $array;
+		if ($result->num_rows > 0) {
+			while ($row = $result->fetch_assoc()) {
+				echo $row['court_id'];
+				break;
+			}
 		}
-		echo json_encode($games);
+		else {
+			$query = "INSERT INTO Court (latitude, longitude) VALUES ('$lat', '$lng')";
+			$conn->query($query);
+			echo $conn->insert_id;
+		}
 	}
 }
+
 ?>

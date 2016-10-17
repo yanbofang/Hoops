@@ -40,7 +40,9 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, MKMapVie
     
     // Move to user's current location when button is pressed
     @IBAction func moveToCurrentLocation(_ sender: AnyObject) {
-        moveToCurrent()
+        if moveToCurrent() {
+            
+        }
     }
     
     let regionRadius: CLLocationDistance = 1500
@@ -63,13 +65,15 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, MKMapVie
     }
     
     // shift to user's current location
-    func moveToCurrent() {
+    func moveToCurrent() -> Bool {
         if CLLocationManager.locationServicesEnabled() {
             locationManager.delegate = self
             locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
             locationManager.startUpdatingLocation()
+            
+            return true
         }
-
+        return false
     }
     
     // Load nearby location from Database here...
@@ -81,27 +85,13 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, MKMapVie
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // For testing, set up nearby games
-        let one = Player(username: "michael")
-        let two = Player(username: "jeff")
-        let three = Player(username: "three")
-        let four = Player(username: "four")
-        nearbyGames.append(Games(
-            gameName: "Coolest Game of the Year",
-            maxPlayers: 6,
-            currentNumPlayers: 2,
-            month: 10,
-            date: 20,
-            startTime: 5,
-            endTime: 6,
-            level: "Novice",
-            teamBlue: [one, three, four],
-            teamRed: [two]
-        ))
-        
         // Authorization
         self.locationManager.requestWhenInUseAuthorization()
-        moveToCurrent()
+        if moveToCurrent() {
+            
+        }
+        
+        
     }
 
     override func didReceiveMemoryWarning() {
