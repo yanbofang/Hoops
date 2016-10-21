@@ -7,17 +7,23 @@
 //
 
 import Foundation
+import UIKit
+import MapKit
 
-class Court {
-    var court_id: Int
-    var courtName: String
-    var latitude: Double
-    var longitude: Double
+class Court: NSObject, MKAnnotation {
+    var identifier = "court location"
+    var title: String?
+    var coordinate: CLLocationCoordinate2D
     
-    init (court_id: Int, courtName: String, latitude: Double, longitude: Double) {
+    
+    var court_id: Int
+    //var courtName: String       replaced with title
+    //var latitude: Double      replaced with latitude
+    //var longitude: Double     replaced with longitude
+    
+    init (court_id: Int, courtName: String, latitude: CLLocationDegrees, longitude: CLLocationDegrees) {
         self.court_id = court_id
-        self.courtName = courtName
-        self.latitude = latitude
-        self.longitude = longitude
+        self.title = courtName
+        coordinate = CLLocationCoordinate2DMake(latitude, longitude)
     }
 }

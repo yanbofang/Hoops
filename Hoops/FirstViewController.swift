@@ -15,6 +15,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, MKMapVie
     var nearbyCourts: [Court] = []
     var courtClicked_id = -1
     
+    
     @IBAction func gameClicked(_ sender: AnyObject) {
     }
     
@@ -60,6 +61,9 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, MKMapVie
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let locValue:CLLocationCoordinate2D = manager.location!.coordinate
         let userLocation = CLLocation(latitude: locValue.latitude, longitude: locValue.longitude)
+        
+        getCourts(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude, radius: 1500)
+        
         centerMapOnLocation(location: userLocation)
         
         // Stop updating location to conserve power
@@ -78,6 +82,8 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, MKMapVie
         return false
     }
     
+    var data = NSMutableData()
+    var index = 0
     // initializes the 'nearbyCourts' array given latitude, longitude, and radius
     func getCourts(latitude: Double, longitude: Double, radius: Int) {
         let tempUrl = "http://hoopsapp.netai.net/maps_op.php?function=getCourts&lat=" + String(latitude) + "&lng="
@@ -92,10 +98,15 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, MKMapVie
             }
             
             do {
+                print("....................")
+                print(data)
                 if let json = try JSONSerialization.jsonObject(with: data) as?
                     [AnyObject] {
+                    print("!!!!!!!!!!!!!!!!")
                     for index in 0...json.count-1 {
+                        
                         if let item = json[index] as? [String: AnyObject] {
+                            
                             if let name = item["name"] as? String {
                                 self.nearbyCourts.append(Court(
                                     court_id: -1,
@@ -152,16 +163,30 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, MKMapVie
         return result
     }
     
+    
+    //The function mapview:viewForAnnotation has a map view and an annotation for parameters,
+    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+        var view : MKPinAnnotationView
+        guard let annotation = annotation as? Court else {return nil}
+        if let dequeuedView = mapView.dequeueReusableAnnotationView(withIdentifier: annotation.identifier) as? MKPinAnnotationView {
+            view = dequeuedView
+        }else { //make a new view
+            view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: annotation.identifier)
+        }
+        return view
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         // Authorization
         self.locationManager.requestWhenInUseAuthorization()
         if moveToCurrent() {
             
         }
-        
-        
+        print("===================")
+        print(nearbyCourts)
+        mapView.addAnnotations(nearbyCourts)
     }
 
     override func didReceiveMemoryWarning() {
