@@ -210,7 +210,9 @@ function getCourtId() {
 		}
 	}
 
-	$result = array("court_id" => $court_id);
+	$result = array();
+	$inner = array("court_id" => $court_id);
+	$result[] = $inner;
 	echo json_encode($result);
 }
 

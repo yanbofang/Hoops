@@ -123,6 +123,8 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, MKMapVie
         let url = NSURL(string: tempUrl)
         let request = URLRequest(url: url as! URL)
         
+        var result = -1
+        
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             guard let data = data else {
                 print("request failed \(error)")
@@ -135,7 +137,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, MKMapVie
                     for index in 0...json.count-1 {
                         if let item = json[index] as? [String: AnyObject] {
                             if let court_id = item["court_id"] as? Int {
-                                return court_id
+                                result = court_id
                             }
                         }
                     }
@@ -147,7 +149,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, MKMapVie
             }
         }
         task.resume()
-        return -1
+        return result
     }
     
     override func viewDidLoad() {
