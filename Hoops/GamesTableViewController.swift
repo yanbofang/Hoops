@@ -23,11 +23,12 @@ class GamesTableViewController: UITableViewController {
         didSet{
             DispatchQueue.global(qos: .userInitiated).async {
                 if self.getData {
+                    self.getData = false
                     self.downloadData()
                 }
                 // Bounce back to the main thread to update the UI
                 DispatchQueue.main.async {
-                    self.getData = false
+                    
                 }
             }
         }
@@ -87,12 +88,12 @@ class GamesTableViewController: UITableViewController {
         // Get game data
         DispatchQueue.global(qos: .userInitiated).async {
             if self.getData {
+                self.getData = false
                 self.downloadData()
             }
             // Bounce back to the main thread to update the UI
             DispatchQueue.main.async {
                 self.GamesTable.reloadData()
-                self.getData = false
             }
         }
         

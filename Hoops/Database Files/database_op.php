@@ -191,22 +191,27 @@ function getCourtId() {
 	if (!is_numeric($lat) || !is_numeric($lng))
 		$success = false;
 
+	$court_id = -1;
+
 	if ($success) {
 		$query = "SELECT court_id FROM Court WHERE ABS(latitude - '$lat') < 0.00005 AND ABS(longitude - '$lng') < 0.00005";
 		$result = $conn->query($query);
 
 		if ($result->num_rows > 0) {
 			while ($row = $result->fetch_assoc()) {
-				echo $row['court_id'];
+				$court_id =  $row['court_id'];
 				break;
 			}
 		}
 		else {
 			$query = "INSERT INTO Court (latitude, longitude) VALUES ('$lat', '$lng')";
 			$conn->query($query);
-			echo $conn->insert_id;
+			$court_id = $conn->insert_id;
 		}
 	}
+
+	$result = array("court_id" => $court_id);
+	echo json_encode($result);
 }
 
 ?>

@@ -47,12 +47,12 @@ function getCourts() {
 	if (isset($_GET['radius']))
 		$radius = $_GET['radius'];
 
-	$url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=$lat,$lng&radius=$radius&keyword=basketball%20court&key=$google_maps_places_key";
+	$url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=".$lat.",".$lng."&radius=".$radius."&keyword=basketball%20court&key=AIzaSyDFtH9hBdaMmIxkLOwwzJqt_x_D74nCQyo";
 
-//  Initiate curl
+//  Initiate curl∂∂
 	$ch = curl_init();
 // Disable SSL verification
-	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
 // Will return the response, if false it print the response
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 // Set the url
@@ -62,7 +62,6 @@ function getCourts() {
 // Closing
 	curl_close($ch);
 
-// Will dump a beauty json :3
 	$result = json_decode($data, true);
 
 	$length = count($result['results']);

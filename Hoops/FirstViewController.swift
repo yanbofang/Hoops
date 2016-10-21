@@ -12,7 +12,8 @@ import CoreLocation
 
 class FirstViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     
-    var nearbyGames: [Games] = []
+    var nearbyCourts: [Court] = []
+    var courtClicked_id = -1
     
     @IBAction func gameClicked(_ sender: AnyObject) {
     }
@@ -24,7 +25,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, MKMapVie
             case "getGames":
                 if let vc = segue.destination as? GamesTableViewController {
                     // Need to pass which basketball court was clicked into the TableViewController
-                    vc.court = 1
+                    vc.court = courtClicked_id
                 }
             default: break
             }
@@ -76,11 +77,78 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, MKMapVie
         return false
     }
     
-    // Load nearby location from Database here...
-    // Will have to implement later...
+    // initializes the 'nearbyCourts' array given latitude, longitude, and radius
+    func getCourts(latitude: Double, longitude: Double, radius: Int) {
+        let tempUrl = "http://hoopsapp.netai.net/maps_op.php?function=getCourts&lat=" + String(latitude) + "&lng="
+            + String(longitude) + "&radius=" + String(radius)
+        let url = NSURL(string: tempUrl)
+        let request = URLRequest(url: url as! URL)
+        
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let data = data else {
+                print("request failed \(error)")
+                return
+            }
+            
+            do {
+                if let json = try JSONSerialization.jsonObject(with: data) as?
+                    [AnyObject] {
+                    for index in 0...json.count-1 {
+                        if let item = json[index] as? [String: AnyObject] {
+                            if let name = item["name"] as? String {
+                                self.nearbyCourts.append(Court(
+                                    court_id: -1,
+                                    courtName: item["name"] as! String,
+                                    latitude: item["lat"] as! Double,
+                                    longitude: item["lng"] as! Double
+                                ))
+                                print(item["description"] as! String)
+                            }
+                        }
+                    }
+                }
+            } catch let parseError {
+                print("parsing error: \(parseError)")
+                let responseString = String(data: data, encoding: .utf8)
+                print("raw response: \(responseString)")
+            }
+        }
+        task.resume()
+    }
     
-    
-    
+    // get court id of a given latitude and longitude
+    func getCourt_Id(latitude: Double, longitude: Double) -> Int {
+        let tempUrl = "http://minh.heliohost.org/database_ops.php?function=getCourtIds&lat=" + String(latitude) + "&lng="
+            + String(longitude)
+        let url = NSURL(string: tempUrl)
+        let request = URLRequest(url: url as! URL)
+        
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let data = data else {
+                print("request failed \(error)")
+                return
+            }
+            
+            do {
+                if let json = try JSONSerialization.jsonObject(with: data) as?
+                    [AnyObject] {
+                    for index in 0...json.count-1 {
+                        if let item = json[index] as? [String: AnyObject] {
+                            if let court_id = item["court_id"] as? Int {
+                                return court_id
+                            }
+                        }
+                    }
+                }
+            } catch let parseError {
+                print("parsing error: \(parseError)")
+                let responseString = String(data: data, encoding: .utf8)
+                print("raw response: \(responseString)")
+            }
+        }
+        task.resume()
+        return -1
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
