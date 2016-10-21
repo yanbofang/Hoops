@@ -102,7 +102,6 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, MKMapVie
                                     latitude: item["lat"] as! Double,
                                     longitude: item["lng"] as! Double
                                 ))
-                                print(item["description"] as! String)
                             }
                         }
                     }
