@@ -12,9 +12,20 @@ import CoreLocation
 
 class FirstViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     
-    var nearbyCourts: [Court] = []
-    var courtClicked_id = -1
+    var nearbyCourts = [Court]()
+    var courtClicked_id = 0
     
+    var userLocation: CLLocation? = nil {
+        didSet {
+            DispatchQueue.global(qos: .userInitiated).async {
+                self.getCourts(latitude: (self.userLocation?.coordinate.latitude)!, longitude: (self.userLocation?.coordinate.longitude)!, radius: 1500)
+                // Bounce back to the main thread to update the UI
+                DispatchQueue.main.async {
+                    self.mapView.addAnnotations(self.nearbyCourts)
+                }
+            }
+        }
+    }
     
     @IBAction func gameClicked(_ sender: AnyObject) {
     }
@@ -43,9 +54,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, MKMapVie
     
     // Move to user's current location when button is pressed
     @IBAction func moveToCurrentLocation(_ sender: AnyObject) {
-        if moveToCurrent() {
-            
-        }
+        moveToCurrent()
     }
     
     let regionRadius: CLLocationDistance = 1500
@@ -60,26 +69,21 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, MKMapVie
     // locationManager() gets called whenever location changes/get updated
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let locValue:CLLocationCoordinate2D = manager.location!.coordinate
-        let userLocation = CLLocation(latitude: locValue.latitude, longitude: locValue.longitude)
+        userLocation = CLLocation(latitude: locValue.latitude, longitude: locValue.longitude)
         
-        getCourts(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude, radius: 1500)
-        
-        centerMapOnLocation(location: userLocation)
+        centerMapOnLocation(location: userLocation!)
         
         // Stop updating location to conserve power
         locationManager.stopUpdatingLocation()
     }
     
     // shift to user's current location
-    func moveToCurrent() -> Bool {
+    func moveToCurrent() {
         if CLLocationManager.locationServicesEnabled() {
             locationManager.delegate = self
             locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
             locationManager.startUpdatingLocation()
-            
-            return true
         }
-        return false
     }
     
     var data = NSMutableData()
@@ -98,21 +102,16 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, MKMapVie
             }
             
             do {
-                print("....................")
-                print(data)
                 if let json = try JSONSerialization.jsonObject(with: data) as?
                     [AnyObject] {
-                    print("!!!!!!!!!!!!!!!!")
                     for index in 0...json.count-1 {
-                        
                         if let item = json[index] as? [String: AnyObject] {
-                            
                             if let name = item["name"] as? String {
                                 self.nearbyCourts.append(Court(
                                     court_id: -1,
                                     courtName: item["name"] as! String,
-                                    latitude: item["lat"] as! Double,
-                                    longitude: item["lng"] as! Double
+                                    latitude: Double(item["lat"] as! String)!,
+                                    longitude: Double(item["lng"] as! String)!
                                 ))
                             }
                         }
@@ -181,12 +180,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, MKMapVie
         super.viewDidLoad()
         // Authorization
         self.locationManager.requestWhenInUseAuthorization()
-        if moveToCurrent() {
-            
-        }
-        print("===================")
-        print(nearbyCourts)
-        mapView.addAnnotations(nearbyCourts)
+        moveToCurrent()
     }
 
     override func didReceiveMemoryWarning() {

@@ -19,7 +19,7 @@ class GamesTableViewController: UITableViewController {
     var games = [Games]()
     var getData = true
     
-    var court: Int = 0 {
+    var court: Int = -1 {
         didSet{
             DispatchQueue.global(qos: .userInitiated).async {
                 if self.getData {
@@ -65,7 +65,6 @@ class GamesTableViewController: UITableViewController {
                                     teamBlue: [],
                                     teamRed: []
                                 ))
-                                print(item["description"] as! String)
                             }
                         }
                         self.GamesTable.reloadData()
@@ -86,14 +85,16 @@ class GamesTableViewController: UITableViewController {
         super.viewDidLoad()
         
         // Get game data
-        DispatchQueue.global(qos: .userInitiated).async {
-            if self.getData {
-                self.getData = false
-                self.downloadData()
-            }
-            // Bounce back to the main thread to update the UI
-            DispatchQueue.main.async {
-                self.GamesTable.reloadData()
+        if court != -1 {
+            DispatchQueue.global(qos: .userInitiated).async {
+                if self.getData {
+                    self.getData = false
+                    self.downloadData()
+                }
+                // Bounce back to the main thread to update the UI
+                DispatchQueue.main.async {
+                    self.GamesTable.reloadData()
+                }
             }
         }
         
@@ -133,12 +134,10 @@ class GamesTableViewController: UITableViewController {
         
         // Configure the cell
         cell.gameName.text = game.gameName
-        cell.level.text = game.level
+        //cell.level.text = game.level
         cell.month.text = String(game.month)
-        cell.date.text = String(game.date)
         cell.players.text = String(game.currentNumPlayers)
         cell.maxPlayers.text = String(game.maxPlayers)
-        cell.startTime.text = String(game.startTime)
         cell.endTime.text = String(game.endTime)
         
         

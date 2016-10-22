@@ -21,9 +21,9 @@ class Court: NSObject, MKAnnotation {
     //var latitude: Double      replaced with latitude
     //var longitude: Double     replaced with longitude
     
-    init (court_id: Int, courtName: String, latitude: CLLocationDegrees, longitude: CLLocationDegrees) {
+    init (court_id: Int, courtName: String, latitude: Double, longitude: Double) {
         self.court_id = court_id
         self.title = courtName
-        coordinate = CLLocationCoordinate2DMake(latitude, longitude)
+        coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
     }
 }
