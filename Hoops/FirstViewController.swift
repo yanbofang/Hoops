@@ -17,6 +17,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, MKMapVie
     
     var userLocation: CLLocation? = nil {
         didSet {
+            let northEast = mapView.convert(CGPoint(x: mapView.bounds.width, y: 0), toCoordinateFrom: mapView)
             DispatchQueue.global(qos: .userInitiated).async {
                 self.getCourts(latitude: (self.userLocation?.coordinate.latitude)!, longitude: (self.userLocation?.coordinate.longitude)!, radius: 1500)
                 // Bounce back to the main thread to update the UI
@@ -171,6 +172,10 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, MKMapVie
             view = dequeuedView
         }else { //make a new view
             view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: annotation.identifier)
+            view.canShowCallout = true
+            view.calloutOffset = CGPoint(x: -5, y: 5)
+            view.rightCalloutAccessoryView = UIButton(type: .detailDisclosure) as UIView
+            
         }
         return view
     }
