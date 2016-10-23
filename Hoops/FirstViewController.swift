@@ -18,8 +18,9 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, MKMapVie
     var userLocation: CLLocation? = nil {
         didSet {
             let northEast = mapView.convert(CGPoint(x: mapView.bounds.width, y: 0), toCoordinateFrom: mapView)
+            let radius = haversine(lat1: northEast.latitude, lon1: northEast.longitude, lat2: (userLocation?.coordinate.latitude)!, lon2: (userLocation?.coordinate.longitude)!)
             DispatchQueue.global(qos: .userInitiated).async {
-                self.getCourts(latitude: (self.userLocation?.coordinate.latitude)!, longitude: (self.userLocation?.coordinate.longitude)!, radius: 1500)
+                self.getCourts(latitude: (self.userLocation?.coordinate.latitude)!, longitude: (self.userLocation?.coordinate.longitude)!, radius: Int(radius))
                 // Bounce back to the main thread to update the UI
                 DispatchQueue.main.async {
                     self.mapView.addAnnotations(self.nearbyCourts)
@@ -58,6 +59,13 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, MKMapVie
         moveToCurrent()
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Authorization
+        self.locationManager.requestWhenInUseAuthorization()
+        moveToCurrent()
+    }
+    
     let regionRadius: CLLocationDistance = 1500
     func centerMapOnLocation(location: CLLocation) {
         let coodinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate,
@@ -91,6 +99,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, MKMapVie
     var index = 0
     // initializes the 'nearbyCourts' array given latitude, longitude, and radius
     func getCourts(latitude: Double, longitude: Double, radius: Int) {
+        //nearbyCourts.removeAll()
         let tempUrl = "http://hoopsapp.netai.net/maps_op.php?function=getCourts&lat=" + String(latitude) + "&lng="
             + String(longitude) + "&radius=" + String(radius)
         let url = NSURL(string: tempUrl)
@@ -129,7 +138,10 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, MKMapVie
     
     // get court id of a given latitude and longitude
     func getCourt_Id(latitude: Double, longitude: Double) -> Int {
-        let tempUrl = "http://minh.heliohost.org/database_ops.php?function=getCourtIds&lat=" + String(latitude) + "&lng="
+        print("****************** PRINTING Lat lng")
+        print(String(latitude))
+        print(longitude)
+        let tempUrl = "http://minh.heliohost.org/hoops/database_op.php?function=getCourtId&lat=" + String(latitude) + "&lng="
             + String(longitude)
         let url = NSURL(string: tempUrl)
         let request = URLRequest(url: url as! URL)
@@ -145,10 +157,15 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, MKMapVie
             do {
                 if let json = try JSONSerialization.jsonObject(with: data) as?
                     [AnyObject] {
+                    print("!!!!!!!!!!!!!!!!!!!!")
                     for index in 0...json.count-1 {
+                        print("******************")
                         if let item = json[index] as? [String: AnyObject] {
-                            if let court_id = item["court_id"] as? Int {
-                                result = court_id
+                            print("*/////////")
+                            if let court_id = item["court_id"] as? String {
+                                print("-=-=-=-=-=-=-=-=-=")
+                                result = Int((court_id as? String)!)!
+                                print(result)
                             }
                         }
                     }
@@ -165,7 +182,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, MKMapVie
     
     
     //The function mapview:viewForAnnotation has a map view and an annotation for parameters,
-    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+    /*func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
         var view : MKPinAnnotationView
         guard let annotation = annotation as? Court else {return nil}
         if let dequeuedView = mapView.dequeueReusableAnnotationView(withIdentifier: annotation.identifier) as? MKPinAnnotationView {
@@ -178,14 +195,66 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, MKMapVie
             
         }
         return view
+    }*/
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        
+        if annotation is MKUserLocation {
+            return nil
+        }
+        
+        let reuseId = "pin"
+        
+        var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId)
+        if pinView == nil {
+            pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
+            pinView?.canShowCallout = true
+            
+            let rightButton: AnyObject! = UIButton(type: .detailDisclosure)
+            
+            pinView!.rightCalloutAccessoryView = rightButton as? UIView
+        }
+        else {
+            pinView?.annotation = annotation
+        }
+        
+        return pinView
     }
     
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        if control == view.rightCalloutAccessoryView {
+            // get the court_id from coordinate position
+            let coordinates = view.annotation?.coordinate
+            DispatchQueue.global(qos: .userInitiated).async {
+                let result = self.getCourt_Id(latitude: (coordinates?.latitude)!, longitude: (coordinates?.longitude)!)
+                // Bounce back to the main thread to update the UI
+                DispatchQueue.main.async {
+                    self.courtClicked_id = result
+                    print("=============================")
+                    print(self.courtClicked_id)
+                }
+            }
+            
+            if courtClicked_id != -1 {
+                performSegue(withIdentifier: "getGames", sender: view)
+            }
+        }
+    }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Authorization
-        self.locationManager.requestWhenInUseAuthorization()
-        moveToCurrent()
+    func haversine(lat1:Double, lon1:Double, lat2:Double, lon2:Double) -> Double {
+        let lat1rad = lat1 * M_PI/180
+        let lon1rad = lon1 * M_PI/180
+        let lat2rad = lat2 * M_PI/180
+        let lon2rad = lon2 * M_PI/180
+        
+        let dLat = lat2rad - lat1rad
+        let dLon = lon2rad - lon1rad
+        var a = sin(dLat/2) * sin(dLat/2)
+        a += sin(dLon/2) * sin(dLon/2) * cos(lat1rad) * cos(lat2rad)
+        let c = 2 * asin(sqrt(a))
+        let R = 6372.8
+        
+        return R * c * 1000
     }
 
     override func didReceiveMemoryWarning() {

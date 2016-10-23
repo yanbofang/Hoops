@@ -198,14 +198,16 @@ function getCourtId() {
 		$result = $conn->query($query);
 
 		if ($result->num_rows > 0) {
+			echo 0;
 			while ($row = $result->fetch_assoc()) {
 				$court_id =  $row['court_id'];
 				break;
 			}
 		}
 		else {
+			echo 1;
 			$query = "INSERT INTO Court (latitude, longitude) VALUES ('$lat', '$lng')";
-			$conn->query($query);
+			$result = $conn->query($query);
 			$court_id = $conn->insert_id;
 		}
 	}
