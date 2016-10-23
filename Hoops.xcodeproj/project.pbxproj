@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		284AF47E1DB1C8330024DD56 /* CreatGameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 284AF47D1DB1C8330024DD56 /* CreatGameViewController.swift */; };
+		284B8A9E1DBC7EC300B2A01D /* basketball.png in Resources */ = {isa = PBXBuildFile; fileRef = 284B8A9D1DBC7EC300B2A01D /* basketball.png */; };
 		28B1968D1DB33091008DB0B7 /* GameInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28B1968C1DB33091008DB0B7 /* GameInfoViewController.swift */; };
 		28C0B9E11DA5E16F0070DBA0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28C0B9E01DA5E16F0070DBA0 /* AppDelegate.swift */; };
 		28C0B9E31DA5E16F0070DBA0 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28C0B9E21DA5E16F0070DBA0 /* FirstViewController.swift */; };
@@ -47,6 +48,7 @@
 
 /* Begin PBXFileReference section */
 		284AF47D1DB1C8330024DD56 /* CreatGameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreatGameViewController.swift; sourceTree = "<group>"; };
+		284B8A9D1DBC7EC300B2A01D /* basketball.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = basketball.png; sourceTree = "<group>"; };
 		28B1968C1DB33091008DB0B7 /* GameInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameInfoViewController.swift; sourceTree = "<group>"; };
 		28C0B9DD1DA5E16F0070DBA0 /* Hoops.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hoops.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		28C0B9E01DA5E16F0070DBA0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -161,6 +163,7 @@
 			children = (
 				C1DDC4BC1DBA8D80005899DE /* Alarm Clock-50.png */,
 				C1DDC4B71DBA863B005899DE /* Calendar-50.png */,
+				284B8A9D1DBC7EC300B2A01D /* basketball.png */,
 				C106085A1DBC7D5800CB616B /* Conference Call-50.png */,
 			);
 			name = Images;
@@ -287,6 +290,7 @@
 				C1DDC4BD1DBA8D80005899DE /* Alarm Clock-50.png in Resources */,
 				C106085B1DBC7D5800CB616B /* Conference Call-50.png in Resources */,
 				28C0B9ED1DA5E16F0070DBA0 /* LaunchScreen.storyboard in Resources */,
+				284B8A9E1DBC7EC300B2A01D /* basketball.png in Resources */,
 				28C0B9EA1DA5E16F0070DBA0 /* Assets.xcassets in Resources */,
 				28C0B9E81DA5E16F0070DBA0 /* Main.storyboard in Resources */,
 				C1DDC4B81DBA863B005899DE /* Calendar-50.png in Resources */,

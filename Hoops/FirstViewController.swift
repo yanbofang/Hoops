@@ -14,7 +14,8 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, MKMapVie
     
     var nearbyCourts = [Court]()
     var courtClicked_id = 0
-    
+    let pinImage = UIImage(named: "basketball.png")
+
     var userLocation: CLLocation? = nil {
         didSet {
             let northEast = mapView.convert(CGPoint(x: mapView.bounds.width, y: 0), toCoordinateFrom: mapView)
@@ -163,29 +164,48 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, MKMapVie
         return result
     }
     
-    
-    //The function mapview:viewForAnnotation has a map view and an annotation for parameters,
-    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
-        var view : MKPinAnnotationView
-        guard let annotation = annotation as? Court else {return nil}
-        if let dequeuedView = mapView.dequeueReusableAnnotationView(withIdentifier: annotation.identifier) as? MKPinAnnotationView {
-            view = dequeuedView
-        }else { //make a new view
-            view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: annotation.identifier)
-            view.canShowCallout = true
-            view.calloutOffset = CGPoint(x: -5, y: 5)
-            view.rightCalloutAccessoryView = UIButton(type: .detailDisclosure) as UIView
-            
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        // Don't want to show a custom image if the annotation is the user's location.
+        guard !(annotation is MKUserLocation) else {
+            return nil
         }
-        return view
+        
+        // Better to make this class property
+        let annotationIdentifier = "AnnotationIdentifier"
+        
+        var annotationView: MKAnnotationView?
+        if let dequeuedAnnotationView = mapView.dequeueReusableAnnotationView(withIdentifier: annotationIdentifier) {
+            annotationView = dequeuedAnnotationView
+            annotationView?.annotation = annotation
+        }
+        else {
+            annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: annotationIdentifier)
+            annotationView?.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
+        }
+        
+        if let annotationView = annotationView {
+            // Configure your annotation view here
+            annotationView.canShowCallout = true
+            
+            let size = CGSize(width: 25, height: 25)
+            UIGraphicsBeginImageContext(size)
+            pinImage!.draw(in: CGRect(x: 0, y: 0, width: size.width, height: size.height))
+            let resizedImage = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+            
+            annotationView.image = resizedImage
+        }
+        
+        return annotationView
     }
-    
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Authorization
         self.locationManager.requestWhenInUseAuthorization()
         moveToCurrent()
+        mapView.delegate = self
     }
 
     override func didReceiveMemoryWarning() {
