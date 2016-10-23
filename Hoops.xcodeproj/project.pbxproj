@@ -18,12 +18,12 @@
 		28C0B9F81DA5E1700070DBA0 /* HoopsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28C0B9F71DA5E1700070DBA0 /* HoopsTests.swift */; };
 		28C0BA031DA5E1700070DBA0 /* HoopsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28C0BA021DA5E1700070DBA0 /* HoopsUITests.swift */; };
 		28C47DA61DB33526001367DF /* GameInfoCommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28C47DA51DB33526001367DF /* GameInfoCommentTableViewCell.swift */; };
+		C106085B1DBC7D5800CB616B /* Conference Call-50.png in Resources */ = {isa = PBXBuildFile; fileRef = C106085A1DBC7D5800CB616B /* Conference Call-50.png */; };
 		C19329671DAB29AF00E2438E /* GamesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19329661DAB29AF00E2438E /* GamesTableViewCell.swift */; };
 		C19447C81DB53CDE008BBB0B /* Court.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19447C71DB53CDE008BBB0B /* Court.swift */; };
 		C1C39D3F1DAA44DA00755981 /* Games.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1C39D3E1DAA44DA00755981 /* Games.swift */; };
 		C1C39D411DAADC6900755981 /* GamesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1C39D401DAADC6900755981 /* GamesTableViewController.swift */; };
-		C1DDC4B81DBA863B005899DE /* Conference Call-50.png in Resources */ = {isa = PBXBuildFile; fileRef = C1DDC4B71DBA863B005899DE /* Conference Call-50.png */; };
-		C1DDC4BB1DBA8CF5005899DE /* Calendar-50.png in Resources */ = {isa = PBXBuildFile; fileRef = C1DDC4BA1DBA8CF5005899DE /* Calendar-50.png */; };
+		C1DDC4B81DBA863B005899DE /* Calendar-50.png in Resources */ = {isa = PBXBuildFile; fileRef = C1DDC4B71DBA863B005899DE /* Calendar-50.png */; };
 		C1DDC4BD1DBA8D80005899DE /* Alarm Clock-50.png in Resources */ = {isa = PBXBuildFile; fileRef = C1DDC4BC1DBA8D80005899DE /* Alarm Clock-50.png */; };
 		C1DF4B541DA8327400388BEC /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DF4B531DA8327400388BEC /* Player.swift */; };
 /* End PBXBuildFile section */
@@ -63,13 +63,13 @@
 		28C0BA021DA5E1700070DBA0 /* HoopsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoopsUITests.swift; sourceTree = "<group>"; };
 		28C0BA041DA5E1700070DBA0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		28C47DA51DB33526001367DF /* GameInfoCommentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameInfoCommentTableViewCell.swift; sourceTree = "<group>"; };
+		C106085A1DBC7D5800CB616B /* Conference Call-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Conference Call-50.png"; path = "assets/Conference Call-50.png"; sourceTree = "<group>"; };
 		C19329661DAB29AF00E2438E /* GamesTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GamesTableViewCell.swift; sourceTree = "<group>"; };
 		C19447C71DB53CDE008BBB0B /* Court.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Court.swift; sourceTree = "<group>"; };
 		C1C39D3E1DAA44DA00755981 /* Games.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Games.swift; sourceTree = "<group>"; };
 		C1C39D401DAADC6900755981 /* GamesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GamesTableViewController.swift; sourceTree = "<group>"; };
-		C1DDC4B71DBA863B005899DE /* Conference Call-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Conference Call-50.png"; path = "../../../../../Downloads/Conference Call-50.png"; sourceTree = "<group>"; };
-		C1DDC4BA1DBA8CF5005899DE /* Calendar-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Calendar-50.png"; path = "../../../../../Downloads/Calendar-50.png"; sourceTree = "<group>"; };
-		C1DDC4BC1DBA8D80005899DE /* Alarm Clock-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Alarm Clock-50.png"; path = "../../../../Downloads/Alarm Clock-50.png"; sourceTree = "<group>"; };
+		C1DDC4B71DBA863B005899DE /* Calendar-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Calendar-50.png"; path = "assets/Calendar-50.png"; sourceTree = "<group>"; };
+		C1DDC4BC1DBA8D80005899DE /* Alarm Clock-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Alarm Clock-50.png"; path = "assets/Alarm Clock-50.png"; sourceTree = "<group>"; };
 		C1DF4B531DA8327400388BEC /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -101,7 +101,6 @@
 		28C0B9D41DA5E16F0070DBA0 = {
 			isa = PBXGroup;
 			children = (
-				C1DDC4BC1DBA8D80005899DE /* Alarm Clock-50.png */,
 				28C0B9DF1DA5E16F0070DBA0 /* Hoops */,
 				28C0B9F61DA5E1700070DBA0 /* HoopsTests */,
 				28C0BA011DA5E1700070DBA0 /* HoopsUITests */,
@@ -160,8 +159,9 @@
 		C1DDC4B91DBA8655005899DE /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				C1DDC4B71DBA863B005899DE /* Conference Call-50.png */,
-				C1DDC4BA1DBA8CF5005899DE /* Calendar-50.png */,
+				C1DDC4BC1DBA8D80005899DE /* Alarm Clock-50.png */,
+				C1DDC4B71DBA863B005899DE /* Calendar-50.png */,
+				C106085A1DBC7D5800CB616B /* Conference Call-50.png */,
 			);
 			name = Images;
 			sourceTree = "<group>";
@@ -285,11 +285,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				C1DDC4BD1DBA8D80005899DE /* Alarm Clock-50.png in Resources */,
+				C106085B1DBC7D5800CB616B /* Conference Call-50.png in Resources */,
 				28C0B9ED1DA5E16F0070DBA0 /* LaunchScreen.storyboard in Resources */,
 				28C0B9EA1DA5E16F0070DBA0 /* Assets.xcassets in Resources */,
-				C1DDC4BB1DBA8CF5005899DE /* Calendar-50.png in Resources */,
 				28C0B9E81DA5E16F0070DBA0 /* Main.storyboard in Resources */,
-				C1DDC4B81DBA863B005899DE /* Conference Call-50.png in Resources */,
+				C1DDC4B81DBA863B005899DE /* Calendar-50.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
