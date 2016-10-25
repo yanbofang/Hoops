@@ -181,7 +181,6 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, MKMapVie
         return result
     }
     
-<<<<<<< HEAD
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         // Don't want to show a custom image if the annotation is the user's location.
         guard !(annotation is MKUserLocation) else {
@@ -210,62 +209,11 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, MKMapVie
             pinImage!.draw(in: CGRect(x: 0, y: 0, width: size.width, height: size.height))
             let resizedImage = UIGraphicsGetImageFromCurrentImageContext()
             UIGraphicsEndImageContext()
-=======
-    
-    //The function mapview:viewForAnnotation has a map view and an annotation for parameters,
-    /*func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
-        var view : MKPinAnnotationView
-        guard let annotation = annotation as? Court else {return nil}
-        if let dequeuedView = mapView.dequeueReusableAnnotationView(withIdentifier: annotation.identifier) as? MKPinAnnotationView {
-            view = dequeuedView
-        }else { //make a new view
-            view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: annotation.identifier)
-            view.canShowCallout = true
-            view.calloutOffset = CGPoint(x: -5, y: 5)
-            view.rightCalloutAccessoryView = UIButton(type: .detailDisclosure) as UIView
->>>>>>> master
-            
             annotationView.image = resizedImage
         }
-<<<<<<< HEAD
-        
         return annotationView
     }
 
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Authorization
-        self.locationManager.requestWhenInUseAuthorization()
-        moveToCurrent()
-        mapView.delegate = self
-=======
-        return view
-    }*/
-    
-    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        
-        if annotation is MKUserLocation {
-            return nil
-        }
-        
-        let reuseId = "pin"
-        
-        var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId)
-        if pinView == nil {
-            pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
-            pinView?.canShowCallout = true
-            
-            let rightButton: AnyObject! = UIButton(type: .detailDisclosure)
-            
-            pinView!.rightCalloutAccessoryView = rightButton as? UIView
-        }
-        else {
-            pinView?.annotation = annotation
-        }
-        
-        return pinView
-    }
     
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         if control == view.rightCalloutAccessoryView {
@@ -301,7 +249,6 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, MKMapVie
         let R = 6372.8
         
         return R * c * 1000
->>>>>>> master
     }
 
     override func didReceiveMemoryWarning() {
